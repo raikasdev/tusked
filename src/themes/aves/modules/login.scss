@@ -6,4 +6,9 @@
   justify-content: center;
   text-align: center;
   align-content: center;
+
+  .login-button {
+    @include button-round-large;
+    @include normalize-in-center-flex;
+  }
 }

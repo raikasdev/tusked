@@ -3,6 +3,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { mastodon } from 'masto';
 import { useSnapshot } from 'valtio';
 
+import FeedPost from './components/FeedPost';
 import PostEditor from './components/PostEditor';
 import { authStore } from './stores/auth';
 import {
@@ -12,6 +13,7 @@ import {
 } from './utils/auth';
 import { getFeed } from './utils/feed';
 import logger from './utils/logger';
+import statusToPost from './utils/status-parser';
 
 // Always import default theme (to avoid "blinking")
 import './themes/aves/theme.scss';
@@ -92,25 +94,7 @@ export function App() {
                   />
                   <div className="post-feed">
                     {feed?.map((status) => {
-                      return (
-                        <div className="post">
-                          <b>
-                            {status.account.acct}{' '}
-                            {status.reblog && (
-                              <>
-                                <br />
-                                boosted a post by @{status.reblog.account.acct}
-                              </>
-                            )}
-                            :
-                          </b>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: status.reblog?.content || status.content,
-                            }}
-                          ></div>
-                        </div>
-                      );
+                      return <FeedPost post={statusToPost(status)} />;
                     })}
                   </div>
                   <p>Is logged in: {snapshot.loggedIn ? 'yes' : 'no'}</p>
@@ -127,7 +111,7 @@ export function App() {
                   </h1>
                   <p>Welcome! Login using mementomori.social</p>
                   <button
-                    className="button-round-large"
+                    className="login-button"
                     onClick={() => {
                       window.location.replace(url);
                     }}

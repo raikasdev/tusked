@@ -78,6 +78,8 @@ Sad to see Tusked isn't for you, at least at it's current stage.
 - [Masto.js](https://github.com/neet/masto.js/) (Mastodon API client)
 - [Vite PWA](https://github.com/vite-pwa/vite-plugin-pwa) (PWA support)
 - SCSS + PostCSS (✨🖌️ theme support planned)
+- [Feather Icons](https://feathericons.com/)
+
 
 ## Privacy policy
 

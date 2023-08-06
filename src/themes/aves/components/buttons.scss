@@ -1,8 +1,8 @@
-.button-round-large {
+@mixin button-round-large {
   background-color: var(--color-link);
   border: 0;
   border-radius: 5rem;
-  color: var(--color-bg);
+  color: var(--color-text);
   font-family:
     system-ui,
     -apple-system,
@@ -34,4 +34,11 @@
     background-color: var(--color-link-hover);
     cursor: pointer;
   }
+}
+
+/* Used to normalize a button's width in a flexbox, while remaining centered */
+@mixin normalize-in-center-flex {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }

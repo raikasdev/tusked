@@ -8,8 +8,20 @@ const {
   VITE_APPLICATION_ID: APPLICATION_ID,
 } = loadEnv("production", process.cwd());
 
+// Getting hash and version
+import { execSync } from "child_process";
+import { readFileSync } from "fs";
+const commitHash = execSync("git rev-parse --short HEAD").toString().trim();
+const packageJson = JSON.parse(
+  readFileSync("./package.json").toString("utf-8"),
+);
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    __COMMIT_HASH__: JSON.stringify(commitHash),
+    __APP_VERSION__: JSON.stringify(packageJson.version),
+  },
   plugins: [
     preact(),
     VitePWA({

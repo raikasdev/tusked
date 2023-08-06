@@ -47,7 +47,7 @@
       justify-content: space-between;
 
       .character-count {
-        color: var(--color-text-dim);
+        color: var(--color-dim);
         font-size: 0.875rem;
         font-weight: 700;
 
@@ -96,6 +96,7 @@
     justify-content: flex-end;
     
     .post-button {
+      @include button-round-large;
       margin-top: 1rem;
     }
   }

@@ -1,5 +1,51 @@
 .post-feed {
   .post {
-    padding: 1rem;
+    @include post;
+
+    transition: background-color .2s;
+
+    &:hover {
+      background-color: var(--color-light-shade);
+    }
+
+    .action-bar {
+      // Action bar is 568px wide, split to 5 (space-between)
+      // -> 133.6, remove 50px (each buttons width)
+      // -> 83.6px
+      gap: 83.6px;
+
+      .action-bar-datetime {
+        display: none;
+      }
+
+      .action {
+        color: var(--color-dim);
+        display: inline-flex;
+        width: 50px;
+
+        .icon-boost::before {
+          content: var(--icon-boost);
+        }
+
+        .icon-reply::before {
+          content: var(--icon-reply);
+        }
+
+        .icon-star::before {
+          content: var(--icon-star);
+        }
+
+        .action-counter {
+          display: inline-block;
+          font-size: 13px;
+          font-weight: 500;
+          margin-inline-start: 4px;
+        }
+
+        .action-label {
+          display: none;
+        }
+      }
+    }
   }
 }

@@ -1,16 +1,24 @@
 @charset 'utf-8';
 
+html {
+  font-size: 15px;
+}
+
 body[data-theme=aves] {
   // Variables
   @import 'variables/colors.scss';
   @import 'variables/fonts.scss';
+  @import 'variables/feed.scss';
 
   // Layout
   @import 'layout/columns.scss';
 
+  // Components
+  @import 'components/buttons.scss';
+  @import 'components/posts.scss';
+
   // Modules / features
   @import 'modules/editor.scss';
-  @import 'modules/buttons.scss';
   @import 'modules/feed.scss';
   @import 'modules/links.scss';
   @import 'modules/login.scss';

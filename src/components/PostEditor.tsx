@@ -107,7 +107,7 @@ export default function PostEditor({ maxLength }: PostEditorProps) {
       </div>
       <div className="post-button-container">
         <button
-          className="post-button button-round-large"
+          className="post-button"
           onClick={async () => {
             const content = editor?.getText();
             if (!content) return;
