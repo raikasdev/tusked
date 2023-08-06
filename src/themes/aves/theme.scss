@@ -1,0 +1,23 @@
+@charset 'utf-8';
+
+body[data-theme=aves] {
+  // Variables
+  @import 'variables/colors.scss';
+  @import 'variables/fonts.scss';
+
+  // Layout
+  @import 'layout/columns.scss';
+
+  // Modules / features
+  @import 'modules/editor.scss';
+  @import 'modules/buttons.scss';
+  @import 'modules/feed.scss';
+  @import 'modules/links.scss';
+  @import 'modules/login.scss';
+
+  background-color: var(--color-bg);
+  color: var(--color-text);
+
+  font-family: mastodon-font-sans-serif, sans-serif;
+  margin: 0;
+}

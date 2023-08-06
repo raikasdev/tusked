@@ -4,6 +4,7 @@ tusked <sup>pre-alpha</sup>
 </h1>
 
 A modern and customizable Mastodon web client.
+
 </div>
 
 Tusked is an alternative web client (+ PWA) for Mastodon being built using [Astro](https://astro.build) by the [creator](https://mementomori.social/@raikas) of [Mastopoet](https://mastopoet.ohjelmoi.fi).
@@ -13,13 +14,14 @@ Tusked is an alternative web client (+ PWA) for Mastodon being built using [Astr
 > <br />**Usage is not recommended, unless you are ready to withstand bugs, and report them to the developers.**
 
 Official deployment (not available yet):
-* 🏭 Production: [tusked.app](https://tusked.app)
-  * Branch: `production`
-  * Hopefully more stable than nightly
-* 🌛 Nightly: [nightly.tusked.app](https://nightly.tusked.app)
-  * Branch: `main`
-  * New features instantly available
-  * New bugs also instantly available
+
+- 🏭 Production: [tusked.app](https://tusked.app)
+  - Branch: `production`
+  - Hopefully more stable than nightly
+- 🌛 Nightly: [nightly.tusked.app](https://nightly.tusked.app)
+  - Branch: `main`
+  - New features instantly available
+  - New bugs also instantly available
 
 ## Features (💡 = planned)
 

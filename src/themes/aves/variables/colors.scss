@@ -1,0 +1,24 @@
+& {
+  --color-bg: #1e2028;
+  --color-text: #f7f9f9;
+  --color-text-dim: #717c9b;
+  --color-text-link: #858afa;
+  --color-link: #6364ff;
+  --color-link-hover: #858afa;
+  --color-border: #38384d;
+
+  // Post editor
+  --color-bg-post-editor: rgba(39, 44, 64 ,.4);
+  --color-bg-post-editor-focus: rgb(39 44 64 / .8);
+  --color-border-post-editor: rgb(39 44 64 / .4);
+  --color-border-post-editor-focus: rgb(39 44 64 / .8);
+}
+
+/**
+TODO: light
+--color-bg: #f7f9f9;
+  --color-text: #1e2028;
+  --color-text-dim: #9388a6;
+  --color-text-link: #858afa;
+  --color-border: #e6e1ed;
+**/

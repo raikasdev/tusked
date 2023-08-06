@@ -1,24 +1,48 @@
-import { useState, useEffect } from 'preact/hooks'
-import { checkAuthState, prepareLoginURL, processAuthorizationCode } from './utils/auth';
-import { useSnapshot } from 'valtio';
-import { authStore } from './stores/auth';
-import logger from './utils/logger';
-import { mastodon } from 'masto';
-import { getFeed } from './utils/feed';
+import { useEffect, useState } from 'preact/hooks';
 
+import { mastodon } from 'masto';
+import { useSnapshot } from 'valtio';
+
+import PostEditor from './components/PostEditor';
+import { authStore } from './stores/auth';
+import {
+  checkAuthState,
+  prepareLoginURL,
+  processAuthorizationCode,
+} from './utils/auth';
+import { getFeed } from './utils/feed';
+import logger from './utils/logger';
+
+// Always import default theme (to avoid "blinking")
+import './themes/aves/theme.scss';
+
+// TODO: save instance data to somewhere, for max character length
 export function App() {
-  const [applicationState, setApplicationState] = useState<'loading' | 'ready'>('loading');
+  const [applicationState, setApplicationState] = useState<'loading' | 'ready'>(
+    'loading',
+  );
   const snapshot = useSnapshot(authStore);
   const [url, setUrl] = useState('');
   const [feed, setFeed] = useState<mastodon.v1.Status[] | null>(null);
+  const [theme, setTheme] = useState('aves');
 
   useEffect(() => {
-    const { search } = typeof window.location === 'string' ? new URL(window.location) : window.location;
+    document.body.dataset.theme = theme;
+
+    if (theme === 'aves') return; // Default theme is already imported
+    import(`./themes/${theme}/theme.scss`); // Dynamically import new theme
+  }, [theme]);
+
+  useEffect(() => {
+    const { search } =
+      typeof window.location === 'string'
+        ? new URL(window.location)
+        : window.location;
     const params = new URLSearchParams(search);
 
     (async () => {
       const authState = await checkAuthState();
-      
+
       async function loadFeed() {
         setFeed(await getFeed());
         setApplicationState('ready');
@@ -48,29 +72,68 @@ export function App() {
   }, []);
 
   return (
-    <>
-      <h1>Tusked</h1>
-      {
-        applicationState === 'loading'
-          ? <p>Loading...</p>
-          : <div class="card">
-              <p>Is logged in: {snapshot.loggedIn ? 'yes' : 'no'}</p>
-              {
-                snapshot.loggedIn
-                  ? <>
-                      <p>You are logged in as @{snapshot.account?.acct}</p>
-                      {feed?.map((status) => {
-                        console.log(status);
-                        return (
-                        <p>{status.account.acct}: {status.content}</p>
-                      )})}
-                    </>
-                  : <a href={url}>
-                      Login
-                    </a>
-              }
+    <div className="tusked-app">
+      <div className="columns">
+        <aside className="column navbar left-navbar"></aside>
+        <main className="column main-content">
+          {applicationState === 'loading' ? (
+            <p>Loading...</p>
+          ) : (
+            <div class="card">
+              {snapshot.loggedIn ? (
+                <div>
+                  <PostEditor />
+                  <div className="post-feed">
+                    {feed?.map((status) => {
+                      return (
+                        <div className="post">
+                          <b>
+                            {status.account.acct}{' '}
+                            {status.reblog && (
+                              <>
+                                <br />
+                                boosted a post by @{status.reblog.account.acct}
+                              </>
+                            )}
+                            :
+                          </b>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: status.reblog?.content || status.content,
+                            }}
+                          ></div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <p>Is logged in: {snapshot.loggedIn ? 'yes' : 'no'}</p>
+                  <p>You are logged in as @{snapshot.account?.acct}</p>
+                  <button onClick={() => setTheme('aves')}>Aves</button>
+                  <button onClick={() => setTheme('aves-light')}>
+                    Aves Light
+                  </button>
+                </div>
+              ) : (
+                <div className="login-container">
+                  <h1>
+                    Tusked <sup>pre-alpha</sup>
+                  </h1>
+                  <p>Welcome! Login using mementomori.social</p>
+                  <button
+                    className="button-round-large"
+                    onClick={() => {
+                      window.location.replace(url);
+                    }}
+                  >
+                    Login
+                  </button>
+                </div>
+              )}
             </div>
-      }
-    </>
-  )
+          )}
+        </main>
+        <aside className="column navbar right-navbar"></aside>
+      </div>
+    </div>
+  );
 }

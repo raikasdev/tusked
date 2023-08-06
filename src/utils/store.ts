@@ -1,12 +1,12 @@
 type Store = {
   get: <T>(key: string) => T | null;
   set: <T>(key: string, value: T) => void;
-}
+};
 
 // TODO: migrate to jotai atoms?
 
 /**
- * Simple persistent key (string) -> value (json object) store 
+ * Simple persistent key (string) -> value (json object) store
  */
 export const localStore: Store = {
   get: <T>(key: string): T | null => {
@@ -26,9 +26,8 @@ export const localStore: Store = {
   },
 };
 
-
 /**
- * Simple session key (string) -> value (json object) store 
+ * Simple session key (string) -> value (json object) store
  */
 export const sessionStore: Store = {
   get: <T>(key: string): T | null => {

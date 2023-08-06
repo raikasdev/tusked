@@ -1,16 +1,20 @@
 import { createRestAPIClient, mastodon } from 'masto';
-import { authStore } from "../stores/auth";
-import logger from "./logger";
-import { localStore } from "./store";
 
-const { VITE_APPLICATION_NAME: APPLICATION_NAME, VITE_APPLICATION_WEBSITE: APPLICATION_WEBSITE } = import.meta.env;
+import { authStore } from '../stores/auth';
+import logger from './logger';
+import { localStore } from './store';
+
+const {
+  VITE_APPLICATION_NAME: APPLICATION_NAME,
+  VITE_APPLICATION_WEBSITE: APPLICATION_WEBSITE,
+} = import.meta.env;
 
 type OAuthState = {
   instanceHost: string;
   client_id: string;
   client_secret: string;
   access_token?: string;
-}
+};
 
 interface ProppedInstanceUrl {
   instanceHost: string;
@@ -21,12 +25,14 @@ export let apiClient: mastodon.rest.Client | null = null;
 export async function prepareLoginURL({ instanceHost }: ProppedInstanceUrl) {
   let oauthState = localStore.get<OAuthState>('oauth');
   if (oauthState == null || oauthState.instanceHost !== instanceHost) {
-    const { client_id, client_secret } = await registerApplication({ instanceHost });
-  
+    const { client_id, client_secret } = await registerApplication({
+      instanceHost,
+    });
+
     oauthState = {
       instanceHost,
       client_id,
-      client_secret
+      client_secret,
     };
 
     localStore.set<OAuthState>('oauth', oauthState);
@@ -38,10 +44,15 @@ export async function prepareLoginURL({ instanceHost }: ProppedInstanceUrl) {
 export async function processAuthorizationCode({ code }: { code: string }) {
   const oauthState = localStore.get<OAuthState>('oauth');
   if (oauthState == null) throw new Error('No OAuth state found');
-  
+
   const { client_id, client_secret, instanceHost } = oauthState;
 
-  const { access_token } = await getAccessToken({ instanceHost, client_id, client_secret, code });
+  const { access_token } = await getAccessToken({
+    instanceHost,
+    client_id,
+    client_secret,
+    code,
+  });
 
   if (!access_token) throw new Error('Invalid code');
 
@@ -57,7 +68,7 @@ export async function processAuthorizationCode({ code }: { code: string }) {
 
     authStore.loggedIn = true;
     authStore.accessToken = access_token;
-    
+
     authStore.account = user;
   } catch (e) {
     throw new Error('Failed to access user profile');
@@ -70,7 +81,7 @@ export async function processAuthorizationCode({ code }: { code: string }) {
 export async function checkAuthState() {
   const oauthState = localStore.get<OAuthState>('oauth');
   if (oauthState == null) return false;
-  
+
   const { access_token, instanceHost } = oauthState;
   if (!access_token) return false;
 
@@ -91,7 +102,10 @@ export async function checkAuthState() {
 
 // Internal functions for Auth
 
-async function initClient({ instanceHost, access_token }: ProppedInstanceUrl & { access_token: string }) {
+async function initClient({
+  instanceHost,
+  access_token,
+}: ProppedInstanceUrl & { access_token: string }) {
   const client = createRestAPIClient({
     url: `https://${instanceHost}`,
     accessToken: access_token, // Can be null
@@ -101,8 +115,8 @@ async function initClient({ instanceHost, access_token }: ProppedInstanceUrl & {
   try {
     const user = await client.v1.accounts.verifyCredentials();
     logger.debug('Logged in as', user);
-    
-    return { client, user }
+
+    return { client, user };
   } catch (e) {
     const oauthState = localStore.get<OAuthState>('oauth');
     if (!oauthState) throw new Error('Invalid access token');
@@ -141,7 +155,10 @@ async function registerApplication({ instanceHost }: ProppedInstanceUrl) {
   return registrationJSON;
 }
 
-function getAuthorizationURL({ instanceHost, client_id }: ProppedInstanceUrl & { client_id: string }) {
+function getAuthorizationURL({
+  instanceHost,
+  client_id,
+}: ProppedInstanceUrl & { client_id: string }) {
   const authorizationParams = new URLSearchParams({
     client_id,
     scope: 'read write follow',

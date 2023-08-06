@@ -1,4 +1,4 @@
-import { apiClient } from "./auth";
+import { apiClient } from './auth';
 
 export async function getFeed() {
   if (!apiClient) throw new Error('Not logged in');
