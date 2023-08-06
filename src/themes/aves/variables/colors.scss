@@ -8,6 +8,15 @@
   --color-border: #38384d;
 
   --color-light-shade: #ffffff05;
+  --color-shade: #ffffff10;
+  --color-heavy-shade: #ffffff20;
+
+  --color-red: #f91880;
+  --color-dark-red: #df405a;
+
+  // Login
+  --color-bg-login-input: var(--color-shade);
+  --color-login-error: var(--color-dark-red);
 
   // Post editor
   --color-bg-post-editor: rgba(39, 44, 64 ,.4);

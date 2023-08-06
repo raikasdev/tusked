@@ -9,6 +9,7 @@ interface Post {
   author: TinyProfile;
 
   content: string;
+  attachments: mastodon.v1.MediaAttachment[];
   date: Date;
 
   favourites: number;

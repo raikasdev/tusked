@@ -10,5 +10,41 @@
   .login-button {
     @include button-round-large;
     @include normalize-in-center-flex;
+    margin-top: 1rem;
+  }
+
+  .instance-input-container {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;   
+    background-color: var(--color-bg-login-input);
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+
+    .instance-input {
+      display: flex;
+      justify-content: center;
+
+      .input-prefix {
+        color: var(--color-dim);
+        line-height: 22.5px;
+        letter-spacing: 0.025rem;
+      }
+  
+        input {
+          color: var(--color-text);
+          background: transparent;
+          border: 0;
+  
+          &:focus {
+            outline: none;
+          }
+        }
+    }
+  }
+
+  .login-error {
+    color: var(--color-login-error);
+    font-size: 0.75rem;
   }
 }

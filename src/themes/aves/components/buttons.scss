@@ -1,3 +1,5 @@
+// Help wanted: make these buttons more clean and the colors more consistent. (disabled)
+
 @mixin button-round-large {
   background-color: var(--color-link);
   border: 0;
@@ -33,6 +35,15 @@
   &:hover {
     background-color: var(--color-link-hover);
     cursor: pointer;
+  }
+
+  &:disabled {
+    background-color: var(--color-shade);
+    color: var(--color-heavy-shade);
+
+    &:hover {
+      background-color: var(--color-shade);
+    }
   }
 }
 

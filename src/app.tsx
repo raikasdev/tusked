@@ -5,12 +5,9 @@ import { useSnapshot } from 'valtio';
 
 import FeedPost from './components/FeedPost';
 import PostEditor from './components/PostEditor';
+import LoginPage from './pages/LoginPage';
 import { authStore } from './stores/auth';
-import {
-  checkAuthState,
-  prepareLoginURL,
-  processAuthorizationCode,
-} from './utils/auth';
+import { checkAuthState, logout, processAuthorizationCode } from './utils/auth';
 import { getFeed } from './utils/feed';
 import logger from './utils/logger';
 import statusToPost from './utils/status-parser';
@@ -24,9 +21,8 @@ export function App() {
     'loading',
   );
   const snapshot = useSnapshot(authStore);
-  const [url, setUrl] = useState('');
   const [feed, setFeed] = useState<mastodon.v1.Status[] | null>(null);
-  const [theme, setTheme] = useState('aves');
+  const [theme] = useState('aves');
 
   useEffect(() => {
     document.body.dataset.theme = theme;
@@ -34,8 +30,6 @@ export function App() {
     if (theme === 'aves') return; // Default theme is already imported
     import(`./themes/${theme}/theme.scss`); // Dynamically import new theme
   }, [theme]);
-
-  console.log(snapshot);
 
   useEffect(() => {
     const { search } =
@@ -70,7 +64,6 @@ export function App() {
         }
       }
 
-      setUrl(await prepareLoginURL({ instanceHost: 'mementomori.social' }));
       setApplicationState('ready');
     })();
   }, []);
@@ -78,10 +71,26 @@ export function App() {
   return (
     <div className="tusked-app">
       <div className="columns">
-        <aside className="column navbar left-navbar"></aside>
+        <aside className="column navbar left-navbar">
+          <div className="navbar-inner">
+            <h1>
+              Tusked <sup>pre-alpha</sup>
+            </h1>
+            {snapshot.loggedIn && (
+              <>
+                <p>You are logged in as @{snapshot.account?.acct}</p>
+                <button className="temp-logout-button" onClick={() => logout()}>
+                  Logout
+                </button>
+              </>
+            )}
+          </div>
+        </aside>
         <main className="column main-content">
           {applicationState === 'loading' ? (
-            <p>Loading...</p>
+            <div className="temp-loading-class">
+              <p>Loading...</p>
+            </div>
           ) : (
             <div class="card">
               {snapshot.loggedIn ? (
@@ -97,33 +106,16 @@ export function App() {
                       return <FeedPost post={statusToPost(status)} />;
                     })}
                   </div>
-                  <p>Is logged in: {snapshot.loggedIn ? 'yes' : 'no'}</p>
-                  <p>You are logged in as @{snapshot.account?.acct}</p>
-                  <button onClick={() => setTheme('aves')}>Aves</button>
-                  <button onClick={() => setTheme('aves-light')}>
-                    Aves Light
-                  </button>
                 </div>
               ) : (
-                <div className="login-container">
-                  <h1>
-                    Tusked <sup>pre-alpha</sup>
-                  </h1>
-                  <p>Welcome! Login using mementomori.social</p>
-                  <button
-                    className="login-button"
-                    onClick={() => {
-                      window.location.replace(url);
-                    }}
-                  >
-                    Login
-                  </button>
-                </div>
+                <LoginPage />
               )}
             </div>
           )}
         </main>
-        <aside className="column navbar right-navbar"></aside>
+        <aside className="column navbar right-navbar">
+          <div className="navbar-inner"></div>
+        </aside>
       </div>
     </div>
   );

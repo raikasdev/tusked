@@ -23,6 +23,7 @@ export default function statusToPost(status: mastodon.v1.Status): Post {
     status, // As fallback
     author: accountToTinyProfile(author),
     content,
+    attachments: actualStatus.mediaAttachments,
     date: new Date(status.createdAt),
     boosts: status.reblogsCount,
     comments: status.repliesCount,

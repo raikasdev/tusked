@@ -1,0 +1,1 @@
+INSTANCES_SOCIAL_SECRET_TOKEN=$INSTANCES_SOCIAL_SECRET_TOKEN bun scripts/generate-instances.ts

@@ -7,9 +7,14 @@
     flex-direction: row;
     justify-content: space-between;
     max-width: 80vw;
-  
+    min-height: 100vh;
+
     .navbar {
       width: 300px;
+      
+      .navbar-inner {
+        position: fixed;
+      }
     }
   
     .main-content {

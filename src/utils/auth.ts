@@ -9,7 +9,7 @@ const {
   VITE_APPLICATION_WEBSITE: APPLICATION_WEBSITE,
 } = import.meta.env;
 
-type OAuthState = {
+export type OAuthState = {
   instanceHost: string;
   client_id: string;
   client_secret: string;
@@ -62,7 +62,10 @@ export async function processAuthorizationCode({ code }: { code: string }) {
   });
 
   try {
-    const { client, user, instance } = await initClient({ instanceHost, access_token });
+    const { client, user, instance } = await initClient({
+      instanceHost,
+      access_token,
+    });
 
     apiClient = client;
 
@@ -76,6 +79,21 @@ export async function processAuthorizationCode({ code }: { code: string }) {
   }
 }
 
+export function logout() {
+  const oauthState = localStore.get<OAuthState>('oauth');
+  if (oauthState == null) return;
+
+  authStore.loggedIn = false;
+  authStore.accessToken = undefined;
+  authStore.account = undefined;
+  apiClient = null;
+
+  localStore.set<OAuthState>('oauth', {
+    ...oauthState,
+    access_token: undefined,
+  });
+}
+
 /**
  * Used to check the auth state initially (to see if user is logged in)
  */
@@ -87,7 +105,10 @@ export async function checkAuthState() {
   if (!access_token) return false;
 
   try {
-    const { client, user, instance } = await initClient({ instanceHost, access_token });
+    const { client, user, instance } = await initClient({
+      instanceHost,
+      access_token,
+    });
 
     apiClient = client;
 
