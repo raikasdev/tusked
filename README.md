@@ -33,6 +33,8 @@ Official deployment (not available yet):
 - 💡 Grouped notifications
 - 💡 Persist drafts between sessions
 - 💡 Automatic Mastodon link detection and opening in app (even with PWA if possible?)
+- 💡 DeepL translate posts (option to automatically?)
+  - 💡 Automatic post language detection (at least suggest, "is this post in <lang>?")
 
 ### Ideas
 
@@ -70,7 +72,7 @@ Sad to see Tusked isn't for you, at least at it's current stage.
 
 - [Vite](https://vitejs.dev) (build tool)
 - [Preact](https://preactjs.com/) (UI library)
-- [Jotai](https://jotai.org/) (State management)
+- [Valtio](https://valtio.pmnd.rs) (State management)
 - [Masto.js](https://github.com/neet/masto.js/) (Mastodon API client)
 - [Vite PWA](https://github.com/vite-pwa/vite-plugin-pwa) (PWA support)
 - SCSS + PostCSS (✨🖌️ theme support planned)
@@ -78,3 +80,7 @@ Sad to see Tusked isn't for you, at least at it's current stage.
 ## Privacy policy
 
 Tusked doesn't collect any personal data. Read more about service providers (anonymous analytics, error logging, hosting) in [PRIVACY.md](https://github.com/raikasdev/tusked/blob/main/PRIVACY.MD).
+
+## Credits
+
+- Tusked includes code from [Phanpy](https://github.com/cheeaun/phanpy) licensed under MIT, consult LICENSE-MIT
