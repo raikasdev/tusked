@@ -16,10 +16,14 @@ import hashtagSuggestion from '../editor/hashtagSuggestion';
 import mentionSuggestion from '../editor/mentionSuggestion';
 import { apiClient } from '../utils/auth';
 
+interface PostEditorProps {
+  maxLength: number;
+}
+
 {
   /* TODO: save drafts to localstorage? */
 }
-export default function PostEditor() {
+export default function PostEditor({ maxLength }: PostEditorProps) {
   const editor = useEditor({
     extensions: [
       Document,
@@ -27,7 +31,7 @@ export default function PostEditor() {
       Paragraph,
       Typography,
       CharacterCount.configure({
-        limit: 10000,
+        limit: maxLength,
       }),
       Link.configure({
         autolink: true,
@@ -97,7 +101,7 @@ export default function PostEditor() {
             <button>5</button>
           </div>
           <span className="character-count">
-            {10000 - editor?.storage.characterCount.characters()}
+            {maxLength - editor?.storage.characterCount.characters()}
           </span>
         </div>
       </div>

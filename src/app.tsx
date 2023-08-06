@@ -33,6 +33,8 @@ export function App() {
     import(`./themes/${theme}/theme.scss`); // Dynamically import new theme
   }, [theme]);
 
+  console.log(snapshot);
+
   useEffect(() => {
     const { search } =
       typeof window.location === 'string'
@@ -82,7 +84,12 @@ export function App() {
             <div class="card">
               {snapshot.loggedIn ? (
                 <div>
-                  <PostEditor />
+                  <PostEditor
+                    maxLength={
+                      snapshot?.instance?.configuration.statuses
+                        .maxCharacters || 500
+                    }
+                  />
                   <div className="post-feed">
                     {feed?.map((status) => {
                       return (

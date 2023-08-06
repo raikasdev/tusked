@@ -62,7 +62,7 @@ export async function processAuthorizationCode({ code }: { code: string }) {
   });
 
   try {
-    const { client, user } = await initClient({ instanceHost, access_token });
+    const { client, user, instance } = await initClient({ instanceHost, access_token });
 
     apiClient = client;
 
@@ -70,6 +70,7 @@ export async function processAuthorizationCode({ code }: { code: string }) {
     authStore.accessToken = access_token;
 
     authStore.account = user;
+    authStore.instance = instance;
   } catch (e) {
     throw new Error('Failed to access user profile');
   }
@@ -86,7 +87,7 @@ export async function checkAuthState() {
   if (!access_token) return false;
 
   try {
-    const { client, user } = await initClient({ instanceHost, access_token });
+    const { client, user, instance } = await initClient({ instanceHost, access_token });
 
     apiClient = client;
 
@@ -94,6 +95,7 @@ export async function checkAuthState() {
     authStore.accessToken = access_token;
 
     authStore.account = user;
+    authStore.instance = instance;
   } catch (e) {
     return false;
   }
@@ -116,7 +118,10 @@ async function initClient({
     const user = await client.v1.accounts.verifyCredentials();
     logger.debug('Logged in as', user);
 
-    return { client, user };
+    const instance = await client.v1.instance.fetch();
+    logger.debug('Instance info', instance);
+
+    return { client, user, instance };
   } catch (e) {
     const oauthState = localStore.get<OAuthState>('oauth');
     if (!oauthState) throw new Error('Invalid access token');
