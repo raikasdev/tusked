@@ -45,6 +45,7 @@ Here's some stuff I have thought of, but not sure if I should implement them.
 - Allowing to view instances local feeds
 - Thread numbering (from Phanpy)
 - Boost icon to rocket (at least on default theme, from Phanpy)
+- Decide if to add Markdown support (like Elk), else create own rich text editor (only highlight stuff highlighted in Mastodon without anything unnecessary in Tiptap)
 
 ## Why build you own client?
 
@@ -87,4 +88,5 @@ Tusked doesn't collect any personal data. Read more about service providers (ano
 
 ## Credits
 
-- Tusked includes code from [Phanpy](https://github.com/cheeaun/phanpy) licensed under MIT, consult LICENSE-MIT
+- Tusked includes code from [Phanpy](https://github.com/cheeaun/phanpy) licensed under MIT, consult LICENSE-PHANPY
+- Elk for inspiration and html parser functions, licensed under MIT, consult LICENSE-ELK

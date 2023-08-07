@@ -1,4 +1,4 @@
-// From phanpy, licensed under the MIT license, consult LICENSE-MIT
+// From phanpy, licensed under the MIT license, consult LICENSE-PHANPY
 // I recommend using bun to execute this
 import fs from 'node:fs';
 

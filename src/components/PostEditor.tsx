@@ -15,6 +15,7 @@ import { HashtagMention } from '../editor/HashtagMention';
 import hashtagSuggestion from '../editor/hashtagSuggestion';
 import mentionSuggestion from '../editor/mentionSuggestion';
 import { apiClient } from '../utils/auth';
+import { htmlToText } from '../utils/html-parser';
 
 interface PostEditorProps {
   maxLength: number;
@@ -109,11 +110,14 @@ export default function PostEditor({ maxLength }: PostEditorProps) {
         <button
           className="post-button"
           onClick={async () => {
-            const content = editor?.getText();
+            const content = editor?.getHTML();
             if (!content) return;
             editor?.commands.clearContent();
+            const mastoText = htmlToText(content);
+            console.log(JSON.stringify(mastoText));
+            // TODO: add loading/posting state
             await apiClient?.v1.statuses.create({
-              status: content,
+              status: mastoText,
               language: 'fi',
             });
           }}
