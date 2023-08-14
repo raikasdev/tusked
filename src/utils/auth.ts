@@ -1,4 +1,4 @@
-import { createRestAPIClient, mastodon } from 'masto';
+import { createRestAPIClient, createStreamingAPIClient, mastodon } from 'masto';
 
 import { authStore } from '../stores/auth';
 import logger from './logger';
@@ -21,6 +21,7 @@ interface ProppedInstanceUrl {
 }
 
 export let apiClient: mastodon.rest.Client | null = null;
+export let streamingClient: mastodon.streaming.Client | null = null;
 
 export async function prepareLoginURL({ instanceHost }: ProppedInstanceUrl) {
   let oauthState = localStore.get<OAuthState>('oauth');
@@ -62,18 +63,10 @@ export async function processAuthorizationCode({ code }: { code: string }) {
   });
 
   try {
-    const { client, user, instance } = await initClient({
+    await initClient({
       instanceHost,
       access_token,
     });
-
-    apiClient = client;
-
-    authStore.loggedIn = true;
-    authStore.accessToken = access_token;
-
-    authStore.account = user;
-    authStore.instance = instance;
   } catch (e) {
     throw new Error('Failed to access user profile');
   }
@@ -87,6 +80,7 @@ export function logout() {
   authStore.accessToken = undefined;
   authStore.account = undefined;
   apiClient = null;
+  streamingClient = null;
 
   localStore.set<OAuthState>('oauth', {
     ...oauthState,
@@ -105,18 +99,10 @@ export async function checkAuthState() {
   if (!access_token) return false;
 
   try {
-    const { client, user, instance } = await initClient({
+    await initClient({
       instanceHost,
       access_token,
     });
-
-    apiClient = client;
-
-    authStore.loggedIn = true;
-    authStore.accessToken = access_token;
-
-    authStore.account = user;
-    authStore.instance = instance;
   } catch (e) {
     return false;
   }
@@ -142,7 +128,23 @@ async function initClient({
     const instance = await client.v1.instance.fetch();
     logger.debug('Instance info', instance);
 
-    return { client, user, instance };
+    apiClient = client;
+    try {
+      streamingClient = createStreamingAPIClient({
+        streamingApiUrl: instance.urls.streamingApi,
+        accessToken: access_token,
+        implementation: window.WebSocket,
+        retry: 1,
+      });
+    } catch (e) {
+      logger.error('Connecting to Streaming API failed');
+    }
+
+    authStore.loggedIn = true;
+    authStore.accessToken = access_token;
+
+    authStore.account = user;
+    authStore.instance = instance;
   } catch (e) {
     const oauthState = localStore.get<OAuthState>('oauth');
     if (!oauthState) throw new Error('Invalid access token');

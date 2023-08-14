@@ -2,7 +2,6 @@ import type { mastodon } from 'masto';
 
 import { authStore } from '../stores/auth';
 import type { Post, TinyProfile } from '../types';
-import logger from './logger';
 
 // From Mastopoet, probably should be made more sturdy
 export default function statusToPost(status: mastodon.v1.Status): Post {
@@ -21,6 +20,7 @@ export default function statusToPost(status: mastodon.v1.Status): Post {
 
   return {
     status, // As fallback
+    id: actualStatus.id,
     author: accountToTinyProfile(author),
     content,
     attachments: actualStatus.mediaAttachments,
@@ -39,13 +39,12 @@ export function accountToTinyProfile(
 ): TinyProfile {
   let username = account.acct;
 
-  if (!username.includes('@')) {
-    logger.debug('Local username, looking up username from WebFinger...');
-
+  if (!username.includes('@'))
     username = `${username}@${authStore.instance?.uri}`;
-  }
 
   username = `@${username}`;
+
+  const shortUsername = `@${account.acct.split('@')[0]}`;
 
   let displayName =
     account.displayName === '' ? account.username : account.displayName;
@@ -60,6 +59,7 @@ export function accountToTinyProfile(
   return {
     displayName,
     username,
+    shortUsername,
     avatarURL: account.avatar,
   };
 }

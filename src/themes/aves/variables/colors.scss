@@ -11,6 +11,8 @@
   --color-shade: #ffffff10;
   --color-heavy-shade: #ffffff20;
 
+  --color-placeholder: rgba(255, 255, 255, 0.4);
+
   --color-red: #f91880;
   --color-dark-red: #df405a;
 
@@ -19,10 +21,10 @@
   --color-login-error: var(--color-dark-red);
 
   // Post editor
-  --color-bg-post-editor: rgba(39, 44, 64 ,.4);
-  --color-bg-post-editor-focus: rgb(39 44 64 / .8);
-  --color-border-post-editor: rgb(39 44 64 / .4);
-  --color-border-post-editor-focus: rgb(39 44 64 / .8);
+  --color-bg-post-editor: rgba(39, 44, 64, 0.4);
+  --color-bg-post-editor-focus: rgb(39 44 64 / 0.8);
+  --color-border-post-editor: rgb(39 44 64 / 0.4);
+  --color-border-post-editor-focus: rgb(39 44 64 / 0.8);
 }
 
 /**

@@ -23,9 +23,12 @@ Official deployment (not available yet):
   - New features instantly available
   - New bugs also instantly available
 
+**About the name**
+Tusked is very similar to Tuskly, which I don't like because it might confuse users. But I couldn't come up with a better project name as of yet. If you have cool name suggestions, toot them at me, [@raikas@mementomori.social](https://mementomori.social/@raikas)!
+
 ## Features (💡 = planned)
 
-- 💡 Feed-wide post editor
+- Feed-wide post editor
 - 💡 Rich post editor (highlighting links, mentions and hashtags)
   - 💡 Support for formatting (only visible to other users of Tusked, via CSS classes)
 - 💡 Popover with user profile when hovering username (allowing to follow without having to click to profile)
@@ -37,6 +40,8 @@ Official deployment (not available yet):
 - 💡 Automatic Mastodon link detection and opening in app (even with PWA if possible?)
 - 💡 DeepL translate posts (option to automatically?)
   - 💡 Automatic post language detection (at least suggest, "is this post in <lang>?")
+- 💡 Multiple account support
+  - 💡 Notifications bubble thing on switcher
 
 ### Ideas
 
@@ -45,7 +50,12 @@ Here's some stuff I have thought of, but not sure if I should implement them.
 - Allowing to view instances local feeds
 - Thread numbering (from Phanpy)
 - Boost icon to rocket (at least on default theme, from Phanpy)
-- Decide if to add Markdown support (like Elk), else create own rich text editor (only highlight stuff highlighted in Mastodon without anything unnecessary in Tiptap)
+- Implement themes:
+  - High contrast
+  - High accessibility (larger text)
+  - [TangerineUI](https://github.com/nileane/TangerineUI-for-Mastodon) port
+  - Catpuccin?
+- E2EE encrypted private messaging :shrug:
 
 ## Why build you own client?
 
@@ -55,6 +65,7 @@ Here's some stuff I have thought of, but not sure if I should implement them.
   - I'm not familiar with Vue, and there's ~25 directories in the root! Seemed too complicated to bother learning how to use Vue and contribute
 - Phanpy is going bit in the wrong direction for my use case and liking, but that's 100% fine! That's the point of being opinionated.
   - Uses JavaScript and not TypeScript :/
+- Add support for new messages and notifications from Streaming API (my instance doens't allow it)
 
 Mastodon Bird UI is already great, but having to interact outside of your instance is still hard. I want a smooth experience, and allow people to customize the client to their needs, without having to host an instance themselves, or use extensions (I still haven't figured out how to properly use Stylus).
 
@@ -75,12 +86,11 @@ Sad to see Tusked isn't for you, at least at it's current stage.
 
 - [Vite](https://vitejs.dev) (build tool)
 - [Preact](https://preactjs.com/) (UI library)
-- [Valtio](https://valtio.pmnd.rs) (State management)
+- [Valtio](https://valtio.pmnd.rs) (state management)
 - [Masto.js](https://github.com/neet/masto.js/) (Mastodon API client)
 - [Vite PWA](https://github.com/vite-pwa/vite-plugin-pwa) (PWA support)
 - SCSS + PostCSS (✨🖌️ theme support planned)
 - [Feather Icons](https://feathericons.com/)
-
 
 ## Privacy policy
 

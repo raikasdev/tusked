@@ -1,4 +1,5 @@
 import { Post } from '../types';
+import { formatDate } from '../utils/date';
 
 interface FeedPostProps {
   post: Post;
@@ -17,8 +18,8 @@ export default function FeedPost({ post }: FeedPostProps) {
               dangerouslySetInnerHTML={{ __html: post.author.displayName }}
             ></strong>
           </bdi>
-          <span className="username">{post.author.username}</span>
-          <span className="datetime">Jul 28, 2023, 17:11</span>
+          <span className="username">{post.author.shortUsername}</span>
+          <span className="datetime">{formatDate(post.date)}</span>
         </span>
       </div>
       <div

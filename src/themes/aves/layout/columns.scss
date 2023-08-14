@@ -1,4 +1,4 @@
-.tusked-app {
+#app {
   display: flex;
   justify-content: center;
 
@@ -11,12 +11,12 @@
 
     .navbar {
       width: 300px;
-      
+
       .navbar-inner {
         position: fixed;
       }
     }
-  
+
     .main-content {
       width: var(--feed-width);
       border-left: 1px solid var(--color-border);

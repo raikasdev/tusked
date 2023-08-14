@@ -5,6 +5,7 @@ import type { mastodon } from 'masto';
  */
 interface Post {
   status: mastodon.v1.Status;
+  id: string;
 
   author: TinyProfile;
 
@@ -27,6 +28,16 @@ interface Post {
  */
 interface TinyProfile {
   username: string;
+  shortUsername: string; // @username even on remotes
   displayName: string;
   avatarURL: string;
+}
+
+/**
+ * PostEditor text object
+ */
+export interface PostEditorPart {
+  type: 'text' | 'mention' | 'link' | 'hashtag' | 'emoji' | 'newline';
+
+  value: string; // text or emoji name
 }
