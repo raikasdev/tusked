@@ -47,4 +47,21 @@
     color: var(--color-login-error);
     font-size: 0.75rem;
   }
+
+  .github-container {
+    margin-top: 2rem;
+    
+    a {
+      color: white;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      
+      &:hover {
+        color: var(--color-link-hover);
+      }
+    }
+  }
 }

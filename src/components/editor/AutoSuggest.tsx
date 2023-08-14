@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'preact/hooks';
-
 export interface AutoSuggestOption {
   imageUrl?: string; // Profile picture
   title: string; // Main text (hashtag, display name)
@@ -7,22 +5,25 @@ export interface AutoSuggestOption {
 }
 interface AutoSuggestProps {
   options: AutoSuggestOption[];
+  submit: (value: string) => void;
 }
-export default function AutoSuggest({ options }: AutoSuggestProps) {
-  const [selected, setSelected] = useState(0);
 
-  useEffect(() => {
-    setSelected(0);
-  }, [options]);
+// Could not get this working :(
+// Decided to move on to other features - Raikas, 14.8.2023
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function AutoSuggest(_props: AutoSuggestProps) {
+  //const [selectedIndex, setSelectedIndex] = useState(0);
 
-  if (options.length === 0) return <></>;
+  return <></>;
 
-  return (
+  /*return (
     <div className="autosuggest-wrapper">
       <div className="autosuggest">
         {options.map((option, index) => (
           <div
-            className={`autosuggest-item${index === selected ? ' active' : ''}`}
+            className={`autosuggest-item${
+              index === selectedIndex ? ' active' : ''
+            }`}
           >
             {option.imageUrl && (
               <div className="item-image">
@@ -37,5 +38,5 @@ export default function AutoSuggest({ options }: AutoSuggestProps) {
         ))}
       </div>
     </div>
-  );
+  );*/
 }
