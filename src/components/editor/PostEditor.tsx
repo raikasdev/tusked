@@ -57,11 +57,7 @@ export default function PostEditor({ maxLength }: PostEditorProps) {
                   case 'mention':
                   case 'link':
                   case 'hashtag':
-                    return (
-                      <span ref={setAnchor} className="link">
-                        {part.value}
-                      </span>
-                    );
+                    return <span className="link">{part.value}</span>;
                   case 'newline':
                     return <br />;
                   default:
