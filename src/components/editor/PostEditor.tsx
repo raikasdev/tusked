@@ -6,7 +6,7 @@ import { authStore } from '../../stores/auth';
 import { PostEditorPart } from '../../types';
 import { calculatePostLength } from '../../utils/post-length';
 import textToEditorPart from '../../utils/text-to-part';
-import AutoSuggest, { AutoSuggestOption } from './AutoSuggest';
+import { AutoSuggestOption } from './AutoSuggest';
 
 interface PostEditorProps {
   maxLength: number;
@@ -22,7 +22,7 @@ export default function PostEditor({ maxLength }: PostEditorProps) {
     () => calculatePostLength(textToEditorPart(text)),
     [text],
   );
-  const [options, setOptions] = useState<AutoSuggestOption[]>([]);
+  const [, setOptions] = useState<AutoSuggestOption[]>([]);
 
   const input = () => {
     if (!ref.current) return;
