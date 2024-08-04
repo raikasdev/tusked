@@ -1,3 +1,9 @@
+## Archived
+
+> [!WARNING]  
+> Lost interest in the project :(
+> Please don't access the links below as I let the domain expire.
+
 <div align="center">
 <h1>
 tusked <sup>pre-alpha</sup>
